@@ -34,7 +34,7 @@ def get_currency_codes():
 def printHelp(error_message="I'll try to give you a helpful error message if I can"):
     print("Help for Tommy's Exchange Rate Calculator")
     print(f"{error_message}")
-    print("usage: erc [input_currency_code] [input_amount] [output_currency_code]")
+    print("usage: erc  [input_amount][input_currency_code][output_currency_code]")
     print("usage: erc [option]")
     print("available options")
     print("help: prints this message")
