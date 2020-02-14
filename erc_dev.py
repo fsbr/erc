@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import requests
 import sys
 import argparse
@@ -18,6 +17,7 @@ def convert(input_amount, input_currency_code, output_currency_code):
     # get exchange rate
     rate = data["rates"][output_currency_code]
     converted_amount = input_amount*rate
+
     converted_amount = "%.2f" % converted_amount
     display_rate = "%.3f" % rate
 
@@ -35,16 +35,15 @@ def options():
     print(" ".join(codes))
 
 # custom help message 
-def printHelp(error_message="I'll try to give you a helpful error message if I can"):
-    print("Help for Tommy's Exchange Rate Calculator")
-    print(f"{error_message}")
-    print("usage: erc  [input_amount][input_currency_code][output_currency_code]")
-    print("usage: erc [option]")
-    print("available options")
-    print("help: prints this message")
+def printHelp():
+    print("Welcome to Tommy's Exchange Rate Calculator")
+    print("Use erc -h to ask for help!")
+    print("erc options - shows available currency codes")
+    print("erc convert - converts currency")
+    print("ex: erc convert 10 USD CNY")
 
 if __name__ == "__main__":
-
+    
     parser = argparse.ArgumentParser()
     
     # put subparsers for the covert, help, and options commands here
@@ -59,6 +58,8 @@ if __name__ == "__main__":
     
     parser_get_currency_codes = subparsers.add_parser("options")
 
-    # run each function by popping out fo the kwargs list
     kwargs = vars(parser.parse_args())
-    globals()[kwargs.pop('subparser')](**kwargs)
+    try:
+        globals()[kwargs.pop("subparser")](**kwargs)
+    except KeyError:
+        printHelp()
