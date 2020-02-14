@@ -12,16 +12,18 @@ def get_currency_json(input_currency_code="USD"):
     data = response.json()
     return data
 
-def convert_currency(input_amount, input_currency_code, output_currency_code):
+#def convert_currency(input_amount, input_currency_code, output_currency_code):
+def convert(input_amount, input_currency_code, output_currency_code):
     data = get_currency_json(input_currency_code)
     # get exchange rate
     rate = data["rates"][output_currency_code]
-    fInput_amount = float(input_amount)
-    converted_amount = fInput_amount*rate
+
+    converted_amount = input_amount*rate
     print(f"Your {input_amount}{input_currency_code} is equal to "
     f" {converted_amount}{output_currency_code} at an exchange rate of {rate}")
 
-def get_currency_codes():
+#def get_currency_codes():
+def options():
     data = get_currency_json()
     rates=data["rates"]
     codes = []
@@ -41,28 +43,19 @@ def printHelp(error_message="I'll try to give you a helpful error message if I c
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    
+    # put subparsers for the covert, help, and options commands here
+    subparsers = parser.add_subparsers(dest="subparser")
 
-    # convert currency option
-    options=False
-    parser.add_argument("-c", "--convert", action="append", nargs="+", type=str,
-                        help="converts currencies: [input amount]"
-                                "[input currency][output currency]")
-    parser.add_argument("-o", "--options",action="store_true", 
-                        help="displays available currencies")
-    args = parser.parse_args()
+    # what goes in the quotes is the name of the command
+    parser_convert = subparsers.add_parser("convert")
+    required = parser_convert.add_argument_group("arguments for currency conv")
+    required.add_argument("input_amount", type=float)
+    required.add_argument("input_currency_code")
+    required.add_argument("output_currency_code")
+    
+    parser_get_currency_codes = subparsers.add_parser("options")
 
-    if args.convert != None:
-        args.convert = args.convert[0]
-        try:
-            input_amount = args.convert[0]
-            input_currency_code = args.convert[1]
-            output_currency_code = args.convert[2]
-            convert_currency( input_amount, input_currency_code, output_currency_code)
-        except ValueError:
-            printHelp("Mismatched Argument Positions")
-        except KeyError:
-            printHelp("Incorrect Currency Code")
-    elif args.options==True:
-       get_currency_codes() 
-    elif args.convert ==None:
-        printHelp()
+    # run each function by popping out fo the kwargs list
+    kwargs = vars(parser.parse_args())
+    globals()[kwargs.pop('subparser')](**kwargs)
