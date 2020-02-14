@@ -36,7 +36,7 @@ def options():
     print(" ".join(codes))
 
 # custom help message 
-def printHelp():
+def print_help():
     print("Welcome to Tommy's Exchange Rate Calculator")
     print("erc options - shows available currency codes")
     print("erc convert - converts currency")
@@ -64,4 +64,4 @@ if __name__ == "__main__":
     try:
         globals()[kwargs.pop("subparser")](**kwargs)
     except KeyError:
-        printHelp()
+        print_help()
