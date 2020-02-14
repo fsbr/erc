@@ -22,7 +22,8 @@ def convert(input_amount, input_currency_code, output_currency_code):
     display_rate = "%.3f" % rate
 
     print(f"Your {input_amount} {input_currency_code} is equal to "
-    f" {converted_amount} {output_currency_code} at an exchange rate of {display_rate}")
+            f" {converted_amount} {output_currency_code} "
+            f"at an exchange rate of {display_rate}")
 
 #def get_currency_codes():
 def options():
@@ -31,15 +32,15 @@ def options():
     codes = []
     for key,value in rates.items():
         codes.append(key)
-    print("the available currency codes are")
+    print("Available currency codes:")
     print(" ".join(codes))
 
 # custom help message 
 def printHelp():
     print("Welcome to Tommy's Exchange Rate Calculator")
-    print("Use erc -h to ask for help!")
     print("erc options - shows available currency codes")
     print("erc convert - converts currency")
+    print("Use erc -h to ask for help!")
     print("ex: erc convert 10 USD CNY")
 
 if __name__ == "__main__":
@@ -49,13 +50,14 @@ if __name__ == "__main__":
     # put subparsers for the covert, help, and options commands here
     subparsers = parser.add_subparsers(dest="subparser")
 
-    # what goes in the quotes is the name of the command
+    #convert command
     parser_convert = subparsers.add_parser("convert")
     required = parser_convert.add_argument_group("arguments for currency conv")
     required.add_argument("input_amount", type=float)
     required.add_argument("input_currency_code")
     required.add_argument("output_currency_code")
-    
+   
+    # options command 
     parser_get_currency_codes = subparsers.add_parser("options")
 
     kwargs = vars(parser.parse_args())
