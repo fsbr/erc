@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-import requests
 
-#from sys import argv
+import requests
 import sys
 import argparse
 
@@ -15,12 +14,15 @@ def get_currency_json(input_currency_code="USD"):
 #def convert_currency(input_amount, input_currency_code, output_currency_code):
 def convert(input_amount, input_currency_code, output_currency_code):
     data = get_currency_json(input_currency_code)
+
     # get exchange rate
     rate = data["rates"][output_currency_code]
-
     converted_amount = input_amount*rate
-    print(f"Your {input_amount}{input_currency_code} is equal to "
-    f" {converted_amount}{output_currency_code} at an exchange rate of {rate}")
+    converted_amount = "%.2f" % converted_amount
+    display_rate = "%.3f" % rate
+
+    print(f"Your {input_amount} {input_currency_code} is equal to "
+    f" {converted_amount} {output_currency_code} at an exchange rate of {display_rate}")
 
 #def get_currency_codes():
 def options():
@@ -42,6 +44,7 @@ def printHelp(error_message="I'll try to give you a helpful error message if I c
     print("help: prints this message")
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     
     # put subparsers for the covert, help, and options commands here
