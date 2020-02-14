@@ -18,7 +18,7 @@ def convert_currency(input_amount, input_currency_code, output_currency_code):
     rate = data["rates"][output_currency_code]
     fInput_amount = float(input_amount)
     converted_amount = fInput_amount*rate
-    print(f"Your {input_amount}{input_currency_code} is equal to "\
+    print(f"Your {input_amount}{input_currency_code} is equal to "
     f" {converted_amount}{output_currency_code} at an exchange rate of {rate}")
 
 def get_currency_codes():
