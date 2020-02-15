@@ -12,6 +12,10 @@ def get_currency_json(input_currency_code="USD"):
 
 #def convert_currency(input_amount, input_currency_code, output_currency_code):
 def convert(input_amount, input_currency_code, output_currency_code):
+
+    if input_currency_code == "RMB":
+        input_currency_code = "CNY"
+
     data = get_currency_json(input_currency_code)
 
     # get exchange rate
@@ -42,6 +46,7 @@ def print_help():
     print("erc convert - converts currency")
     print("Use erc -h to ask for help!")
     print("ex: erc convert 10 USD CNY")
+
 
 if __name__ == "__main__":
     
