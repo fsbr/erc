@@ -15,6 +15,8 @@ def convert(input_amount, input_currency_code, output_currency_code):
 
     if input_currency_code == "RMB":
         input_currency_code = "CNY"
+    if output_currency_code == "RMB":
+        output_currency_code = "CNY"
 
     data = get_currency_json(input_currency_code)
 
